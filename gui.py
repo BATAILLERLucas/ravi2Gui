@@ -12,8 +12,8 @@ class Gui(QMainWindow):
     def initUI(self):
         self.statusBar().showMessage('Ready')
 
-        self.setGeometry(300, 300, 250, 150)
-        self.setWindowTitle('Ravi Example')
+        self.setGeometry(500, 300, 1280, 720)
+        self.setWindowTitle('fenetre speciale')
         self.show()
 
 
