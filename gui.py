@@ -1,5 +1,6 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication, QAction, QWidget, QVBoxLayout, QTabWidget, QPushButton
+from PyQt5.QtWidgets import QMainWindow, QApplication, QAction, QWidget, QVBoxLayout, QTabWidget, QPushButton, \
+    QLineEdit, QInputDialog
 
 
 class Gui(QMainWindow):
@@ -51,6 +52,7 @@ class Gui(QMainWindow):
 
 
 class MyTableWidget(QWidget):
+    def __init__(self, parent):
         super(QWidget, self).__init__(parent)
         self.layout = QVBoxLayout(self)
 
@@ -82,3 +84,8 @@ class MyTableWidget(QWidget):
         # Add tabs to widget
         self.layout.addWidget(self.tabs)
         self.setLayout(self.layout)
+
+    def openClick(self):
+         print("click")
+         non,reponse = QInputDialog.getText(self,"input dialog", "Votre nom ?",QLineEdit.Normal,"")
+         print(nom)
