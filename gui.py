@@ -1,4 +1,5 @@
 import sys
+import json
 
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QApplication, QAction, qApp, QWidget, QVBoxLayout, QTabWidget, QPushButton, \
@@ -23,12 +24,12 @@ class Gui(QMainWindow):
         menubar = self.menuBar()
         fichierMenu = menubar.addMenu("Fichier")
 
-        openAct = QAction("Ouvrir",self)
+        openAct = QAction("Ouvrir", self)
         openAct.triggered.connect(self.open)
         openAct.setShortcut('ctrl+O')
         openAct.setStatusTip('Ouvrir un fichier')
 
-        recAct = QAction("Enregistrer",self)
+        recAct = QAction("Enregistrer", self)
         recAct.triggered.connect(self.rec)
         recAct.setShortcut('ctrl+S')
         recAct.setStatusTip('Enregistrer un fichier')
@@ -48,7 +49,7 @@ class Gui(QMainWindow):
 
         self.setMinimumSize(1280, 720)
 
-        self.setWindowTitle('Ravi Example')
+        self.setWindowTitle('Fenetre Cour')
 
         self.myWidget = MyTableWidget(self)
 
@@ -84,7 +85,7 @@ class MyTableWidget(QWidget):
         self.tabs.addTab(self.tab2, "Onglet 2")
 
         self.tab1.layout = QVBoxLayout(self)
-        openButton = QPushButton("Nom ?")
+        openButton = QPushButton("Votre Nom ?")
         openButton.clicked.connect(self.openClick)
 
         self.tab1.layout.addWidget(openButton)
@@ -105,6 +106,13 @@ class MyTableWidget(QWidget):
         self.tableWidget.setItem(2, 0, QTableWidgetItem("Sexe ?"))
         self.tableWidget.setItem(3, 0, QTableWidgetItem("Age ?"))
         self.tableWidget.setItem(4, 0, QTableWidgetItem("Taille ?"))
+        self.tableWidget.setItem(4, 0, QTableWidgetItem("Pointure ?"))
+
+        saveButton = QPushButton("Sauvegarde")
+        saveButton.clicked.connect(self.saveClick)
+        self.tab2.layout.addWidget(saveButton)
+
+        self.tab2.setLayout(self.tab2.layout)
 
         # Add tabs to widget
         self.layout.addWidget(self.tabs)
@@ -112,6 +120,26 @@ class MyTableWidget(QWidget):
 
     def openClick(self):
         print("click")
-        nom,type = QInputDialog.getText(self, "input dialog", "Votre Nom ?",QLineEdit.Normal,"")
+        nom, type = QInputDialog.getText(self, "input dialog", "Votre Nom ?", QLineEdit.Normal, "")
         print(nom)
 
+    def saveClick(self):
+        print("save")
+
+        dictionnaire = {}
+        if self.tableWidget.item(0, 1):
+            dictionnaire['nom'] = self.tableWidget.item(0, 1).text()
+        if self.tableWidget.item(1, 1):
+            dictionnaire['prenom'] = self.tableWidget.item(1, 1).text()
+        if self.tableWidget.item(2, 1):
+            dictionnaire['Date'] = self.tableWidget.item(2, 1).text()
+        if self.tableWidget.item(3, 1):
+            dictionnaire['Sexe'] = self.tableWidget.item(3, 1).text()
+        if self.tableWidget.item(4, 1):
+            dictionnaire['Taille'] = self.tableWidget.item(4, 1).text()
+        if self.tableWidget.item(5, 1):
+            dictionnaire['Poids'] = self.tableWidget.item(5, 1).text()
+
+        print(dictionnaire)
+        with open('data.json', 'w') as fp:
+            json.dump(dictionnaire, fp)
