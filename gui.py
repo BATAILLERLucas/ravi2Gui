@@ -1,57 +1,74 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication, QAction, QWidget, QVBoxLayout, QTabWidget, QPushButton, \
-    QLineEdit, QInputDialog
 
+from PyQt5 import QtCore
+from PyQt5.QtWidgets import QMainWindow, QApplication, QAction, qApp, QWidget, QVBoxLayout, QTabWidget, QPushButton, \
+    QInputDialog, QLineEdit
+
+try:
+    _fromUtf8 = QtCore.QString.fromUtf8
+except AttributeError:
+    def _fromUtf8(r):
+        return r
 
 class Gui(QMainWindow):
 
-     def __init__(self):
+    def __init__(self, parent=None):
         super().__init__()
         self.initUI()
 
-     def initUI(self):
+
+    def initUI(self):
         self.statusBar().showMessage('Ready')
 
         menubar = self.menuBar()
         fichierMenu = menubar.addMenu("Fichier")
 
-        openAct = QAction("Ouvrir", self)
+        openAct = QAction("Ouvrir",self)
         openAct.triggered.connect(self.open)
         openAct.setShortcut('ctrl+O')
         openAct.setStatusTip('Ouvrir un fichier')
 
-        reAct = QAction("Enregistrer", self)
-        openAct.triggered.connect(self.rec)
-        openAct.setShortcut('ctrl+S')
-        openAct.setStatusTip('Enregister un fichier')
+        recAct = QAction("Enregistrer",self)
+        recAct.triggered.connect(self.rec)
+        recAct.setShortcut('ctrl+S')
+        recAct.setStatusTip('Enregistrer un fichier')
 
-        quitAct = QAction("Quitter", self)
-        openAct.triggered.connect(self.exit)
-        openAct.setShortcut('ctrl+Q')
-        openAct.setStatusTip('Quitter un fichier')
+
+        quitAct = QAction("Quitter",self)
+        quitAct.triggered.connect(self.exit)
+        quitAct.setShortcut('ctrl+Q')
+        quitAct.setStatusTip('Quitter')
+
+
 
         fichierMenu.addAction(openAct)
+        fichierMenu.addAction(recAct)
         fichierMenu.addSeparator()
-        fichierMenu.addAction(reAct)
         fichierMenu.addAction(quitAct)
 
         self.setMinimumSize(1280, 720)
-        self.setWindowTitle('fenetre speciale')
-        self.myWidget = MyTableWidget
+
+        self.setWindowTitle('Ravi Example')
+
+        self.myWidget = MyTableWidget(self)
+
         self.setCentralWidget(self.myWidget)
+
         self.show()
 
-     def open(self):
-      print("open")
+    def open(self):
+        print("open")
 
-     def rec(self):
-      print("rec")
+    def rec(self):
+        print("rec")
 
-     def exit(self):
-      print("exit")
+    def exit(self):
+        print("exit")
+        self.quit
 
 
 class MyTableWidget(QWidget):
+
     def __init__(self, parent):
         super(QWidget, self).__init__(parent)
         self.layout = QVBoxLayout(self)
@@ -60,32 +77,28 @@ class MyTableWidget(QWidget):
         self.tabs = QTabWidget()
         self.tab1 = QWidget()
         self.tab2 = QWidget()
-        self.tabs.resize(300, 200)
+
 
         # Add tabs
         self.tabs.addTab(self.tab1, "Onglet 1")
         self.tabs.addTab(self.tab2, "Onglet 2")
 
         self.tab1.layout = QVBoxLayout(self)
-        openButton = QPushButton("Non?")
+        openButton = QPushButton("Nom ?")
         openButton.clicked.connect(self.openClick)
 
         self.tab1.layout.addWidget(openButton)
-        self.tab1.setlayout(self.tab1.layout)
-
-
-
-        # Create first tab
-        self.tab1.layout = QVBoxLayout(self)
-        self.pushButton1 = QPushButton("PyQt5 button")
-        self.tab1.layout.addWidget(self.pushButton1)
         self.tab1.setLayout(self.tab1.layout)
+        self.tab1.setStyleSheet(_fromUtf8("background-image: url(./PlanStylmonde.png); background-attachment: fixed"))
+
+
 
         # Add tabs to widget
         self.layout.addWidget(self.tabs)
         self.setLayout(self.layout)
 
     def openClick(self):
-         print("click")
-         non,reponse = QInputDialog.getText(self,"input dialog", "Votre nom ?",QLineEdit.Normal,"")
-         print(nom)
+        print("click")
+        nom,type = QInputDialog.getText(self,"input dialog","Votre Nom ?",QLineEdit.Normal,"")
+        print(nom)
+
