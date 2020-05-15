@@ -94,7 +94,7 @@ class MyTableWidget(QWidget):
         # Tab 2:
         self.tableWidget = QTableWidget()
         self.tableWidget.setRowCount(6)
-        self.tableWidget.setColumnCount(2)
+        self.tableWidget.setColumnCount(6)
 
         self.tab2.layout = QVBoxLayout(self)
         self.tab2.layout.addWidget(self.tableWidget)
@@ -102,9 +102,9 @@ class MyTableWidget(QWidget):
 
         self.tableWidget.setItem(0, 0, QTableWidgetItem("nom ?"))
         self.tableWidget.setItem(1, 0, QTableWidgetItem("Prenom ?"))
-        self.tableWidget.setItem(1, 0, QTableWidgetItem("Sexe ?"))
-        self.tableWidget.setItem(1, 0, QTableWidgetItem("Age ?"))
-        self.tableWidget.setItem(1, 0, QTableWidgetItem("Taille ?"))
+        self.tableWidget.setItem(2, 0, QTableWidgetItem("Sexe ?"))
+        self.tableWidget.setItem(3, 0, QTableWidgetItem("Age ?"))
+        self.tableWidget.setItem(4, 0, QTableWidgetItem("Taille ?"))
 
         # Add tabs to widget
         self.layout.addWidget(self.tabs)
